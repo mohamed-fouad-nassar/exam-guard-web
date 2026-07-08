@@ -1,18 +1,18 @@
 export const PATHS = {
-  // Auth
+  LANDING: "/",
+
   LOGIN: "/login",
   REGISTER: "/register",
 
-  // Dashboard
-  DASHBOARD: "/",
-
-  // Exams
-  EXAMS: "/exams",
-  EXAM_CREATE: "/exams/create",
+  DASHBOARD: "/dashboard",
+  EXAMS: "/dashboard/exams",
+  EXAM_CREATE: "/dashboard/exams/create",
+  EXAM_DETAIL: (examId: string) => `/dashboard/exams/${examId}`,
   EXAM_TAKE: (examId: string) => `/exams/${examId}/take`,
-  EXAM_DETAIL: (examId: string) => `/exams/${examId}`,
 
-  // Results
-  RESULTS: "/results",
-  RESULT_DETAIL: (resultId: string) => `/results/${resultId}`,
+  RESULTS: "/dashboard/results",
+  RESULT_DETAIL: (resultId: string) => `/dashboard/results/${resultId}`,
+
+  SETTINGS: "/dashboard/settings",
+  USERS: "/dashboard/users",
 } as const;

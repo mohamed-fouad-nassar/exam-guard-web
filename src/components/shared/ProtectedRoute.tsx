@@ -2,24 +2,20 @@ import { Navigate, Outlet } from "react-router";
 
 import { PATHS } from "@/router/paths";
 import type { Role } from "@/types/common.types";
+import { mockUser } from "@/lib/mock-user";
 
 interface Props {
   allowedRoles?: Role[];
 }
 
 const ProtectedRoute = ({ allowedRoles }: Props) => {
-  const { isAuthenticated, user } = {
-    isAuthenticated: true,
-    user: {
-      role: "admin",
-    },
-  };
+  const isAuthenticated = true;
 
   if (!isAuthenticated) {
     return <Navigate to={PATHS.LOGIN} replace />;
   }
 
-  if (allowedRoles && user && !allowedRoles.includes(user.role as Role)) {
+  if (allowedRoles && !allowedRoles.includes(mockUser.role)) {
     return <Navigate to={PATHS.DASHBOARD} replace />;
   }
 

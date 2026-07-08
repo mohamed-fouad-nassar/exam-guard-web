@@ -9,6 +9,7 @@ import DashboardLayout from "@/layouts/DashboardLayout";
 import GuestRoute from "@/components/shared/GuestRoute";
 import ProtectedRoute from "@/components/shared/ProtectedRoute";
 
+import Landing from "@/pages/landing/Landing";
 import Login from "@/pages/auth/Login";
 import Register from "@/pages/auth/Register";
 
@@ -20,6 +21,10 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
+        {/* ── Public Landing ─────────────────────────── */}
+        <Route path={PATHS.LANDING} element={<Landing />} />
+
+        {/* ── Guest only (Auth) ─────────────────────── */}
         <Route element={<GuestRoute />}>
           <Route element={<AuthLayout />}>
             <Route path={PATHS.LOGIN} element={<Login />} />
@@ -27,23 +32,21 @@ const AppRouter = () => {
           </Route>
         </Route>
 
-        {/* ── Protected: All Roles ──────────────────── */}
+        {/* ── Protected Dashboard (all roles) ───────── */}
         <Route element={<ProtectedRoute />}>
-          <Route element={<DashboardLayout />}>
-            <Route path={PATHS.DASHBOARD} element={<Dashboard />} />
-            <Route path={PATHS.EXAMS} element={<div>Exams</div>} />
-            <Route path={PATHS.RESULTS} element={<div>Results</div>} />
+          <Route path={PATHS.DASHBOARD} element={<DashboardLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="exams" element={<div>Exams</div>} />
+            <Route path="exams/create" element={<div>Create Exam</div>} />
+            <Route path="exams/:examId" element={<div>Exam Detail</div>} />
+            <Route path="results" element={<div>Results</div>} />
+            <Route path="results/:resultId" element={<div>Result Detail</div>} />
+            <Route path="settings" element={<div>Settings</div>} />
+            <Route path="users" element={<div>Users</div>} />
           </Route>
         </Route>
 
-        {/* ── Protected: Teacher & Admin Only ───────── */}
-        <Route element={<ProtectedRoute allowedRoles={["teacher", "admin"]} />}>
-          <Route element={<DashboardLayout />}>
-            <Route path={PATHS.EXAM_CREATE} element={<div>Create Exam</div>} />
-          </Route>
-        </Route>
-
-        {/* ── Protected: Exam Session ───────────────── */}
+        {/* ── Protected: Exam Session (student only) ── */}
         <Route element={<ProtectedRoute allowedRoles={["student"]} />}>
           <Route element={<ExamLayout />}>
             <Route path="/exams/:examId/take" element={<div>Take Exam</div>} />
