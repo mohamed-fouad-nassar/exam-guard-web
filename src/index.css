@@ -54,6 +54,12 @@
   --color-on-surface-variant: var(--on-surface-variant);
   --color-outline: var(--outline);
   --color-outline-variant: var(--outline-variant);
+  --color-secondary-container: var(--secondary-container);
+  --color-on-secondary-container: var(--on-secondary-container);
+  --color-error-container: var(--error-container);
+  --color-on-error-container: var(--on-error-container);
+  --color-tertiary-container: var(--tertiary-container);
+  --color-on-tertiary-container: var(--on-tertiary-container);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -101,6 +107,12 @@
   --on-surface-variant: #5a5e6a;
   --outline: #8d90a0;
   --outline-variant: #d4d6dd;
+  --secondary-container: #e8ecf4;
+  --on-secondary-container: #253144;
+  --error-container: #ffe4e6;
+  --on-error-container: #7f1d1d;
+  --tertiary-container: #e0e7ff;
+  --on-tertiary-container: #1e3a5f;
   --sidebar: #ffffff;
   --sidebar-foreground: #2d3133;
   --sidebar-primary: #2563eb;
@@ -149,6 +161,12 @@
   --on-surface-variant: #c3c6d7;
   --outline: #8d90a0;
   --outline-variant: #434655;
+  --secondary-container: #3e495e;
+  --on-secondary-container: #adb9d1;
+  --error-container: #93000a;
+  --on-error-container: #ffdad6;
+  --tertiary-container: #5c6d90;
+  --on-tertiary-container: #ebefff;
   --sidebar: #1d2022;
   --sidebar-foreground: #e0e3e5;
   --sidebar-primary: #2563eb;
@@ -162,6 +180,14 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   body {

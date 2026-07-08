@@ -78,7 +78,7 @@ export default function DashboardLayout() {
         onClose={() => setDrawerOpen(false)}
         navItems={navItems}
       />
-      <main className="lg:ml-60 pt-24 pb-12 px-6 max-w-350 mx-auto">
+      <main className="lg:ml-60 pt-24 pb-12 px-6">
         <Outlet />
       </main>
     </div>

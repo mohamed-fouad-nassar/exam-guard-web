@@ -6,6 +6,7 @@ export const PATHS = {
 
   DASHBOARD: "/dashboard",
   EXAMS: "/dashboard/exams",
+  EXAM_SEARCH: "/dashboard/exams/search",
   EXAM_CREATE: "/dashboard/exams/create",
   EXAM_DETAIL: (examId: string) => `/dashboard/exams/${examId}`,
   EXAM_TAKE: (examId: string) => `/exams/${examId}/take`,
