@@ -586,6 +586,6 @@ Before opening a PR, confirm:
 
 <div align="center">
 
-Part of the **ExamGuard AI** platform · Built with ❤️ · Faculty of Computer Science · 2025
+Part of the **ExamGuard AI** platform · Built with ❤️ · ITI OS 46 · 2025
 
 </div>
