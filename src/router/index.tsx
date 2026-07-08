@@ -14,6 +14,7 @@ import Login from "@/pages/auth/Login";
 import Register from "@/pages/auth/Register";
 
 import Dashboard from "@/pages/dashboard/Dashboard";
+import Exams from "@/pages/dashboard/Exams";
 
 import NotFound from "@/pages/NotFound";
 
@@ -36,7 +37,8 @@ const AppRouter = () => {
         <Route element={<ProtectedRoute />}>
           <Route path={PATHS.DASHBOARD} element={<DashboardLayout />}>
             <Route index element={<Dashboard />} />
-            <Route path="exams" element={<div>Exams</div>} />
+            <Route path="exams" element={<Exams />} />
+            <Route path="exams/search" element={<Exams />} />
             <Route path="exams/create" element={<div>Create Exam</div>} />
             <Route path="exams/:examId" element={<div>Exam Detail</div>} />
             <Route path="results" element={<div>Results</div>} />
