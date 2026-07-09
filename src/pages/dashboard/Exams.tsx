@@ -212,7 +212,7 @@ export default function Exams() {
                   key={id}
                   {...cardProps}
                   onDetails={() => navigate(PATHS.EXAM_DETAIL(id))}
-                  onStart={() => navigate(PATHS.EXAM_TAKE(id))}
+                  onStart={() => navigate(PATHS.EXAM_SESSION(id))}
                   onEnterLobby={() => navigate(PATHS.EXAM_TAKE(id))}
                   onViewResults={() => navigate(PATHS.RESULT_DETAIL(id))}
                   onViewReport={() => navigate(PATHS.RESULT_DETAIL(id))}
@@ -233,7 +233,7 @@ export default function Exams() {
           title="Advanced Systems Design: Midterm II"
           endsAt="11:45 AM"
           timeLeft="45m Left"
-          onStart={() => navigate(PATHS.EXAM_TAKE("active-1"))}
+          onStart={() => navigate(PATHS.EXAM_SESSION("active-1"))}
         />
 
         {hasEnrolledExams ? (

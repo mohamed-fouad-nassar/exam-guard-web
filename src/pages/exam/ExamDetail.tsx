@@ -1,3 +1,4 @@
+import { useParams, useNavigate } from "react-router";
 import { Camera, Monitor, Keyboard, Mic, Wifi } from "lucide-react";
 import type { IntegrityItem, SystemCheckItem, FaqItem } from "@/types/exam.types";
 
@@ -58,6 +59,9 @@ const faqs: FaqItem[] = [
 ];
 
 export default function ExamDetail() {
+  const { examId } = useParams();
+  const navigate = useNavigate();
+
   return (
     <div className="space-y-8 pb-32">
       <BackButton title="Back to Exams" />
@@ -69,6 +73,7 @@ export default function ExamDetail() {
           questionsCount={mockData.questionsCount}
           timeLimitMinutes={mockData.timeLimitMinutes}
           passingScore={mockData.passingScore}
+          onStart={() => navigate(`/exams/${examId}/session`)}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

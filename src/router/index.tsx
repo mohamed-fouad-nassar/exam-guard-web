@@ -18,6 +18,7 @@ import Exams from "@/pages/dashboard/Exams";
 import Results from "@/pages/dashboard/Results";
 
 import ExamLobby from "@/pages/exam/ExamLobby";
+import ExamSession from "@/pages/exam/ExamSession";
 import ExamDetail from "@/pages/exam/ExamDetail";
 import NotFound from "@/pages/NotFound";
 
@@ -54,11 +55,16 @@ const AppRouter = () => {
           </Route>
         </Route>
 
-        {/* ── Protected: Exam Session (student only) ── */}
+        {/* ── Protected: Exam Taking (student only) ── */}
         <Route element={<ProtectedRoute allowedRoles={["student"]} />}>
           <Route element={<ExamLayout />}>
             <Route path="/exams/:examId/take" element={<ExamLobby />} />
           </Route>
+        </Route>
+
+        {/* ── Protected: Exam Session / Questions (student only) ── */}
+        <Route element={<ProtectedRoute allowedRoles={["student"]} />}>
+          <Route path="/exams/:examId/session" element={<ExamSession />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
