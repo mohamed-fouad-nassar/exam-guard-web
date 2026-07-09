@@ -207,7 +207,14 @@ export default function Exams() {
             <EnrollCard />
             {examCards.map((card) => {
               const { id, ...cardProps } = card;
-              return <ExamCard key={id} {...cardProps} />;
+              return (
+                <ExamCard
+                  key={id}
+                  {...cardProps}
+                  onStart={() => navigate(PATHS.EXAM_TAKE(id))}
+                  onEnterLobby={() => navigate(PATHS.EXAM_TAKE(id))}
+                />
+              );
             })}
           </div>
         ) : (
@@ -223,6 +230,7 @@ export default function Exams() {
           title="Advanced Systems Design: Midterm II"
           endsAt="11:45 AM"
           timeLeft="45m Left"
+          onStart={() => navigate(PATHS.EXAM_TAKE("active-1"))}
         />
 
         {hasEnrolledExams ? (
