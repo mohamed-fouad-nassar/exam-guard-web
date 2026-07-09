@@ -17,7 +17,6 @@ const difficultyConfig = {
 
 export default function QuestionHeader({
   number,
-  total,
   points,
   difficulty,
   className,
