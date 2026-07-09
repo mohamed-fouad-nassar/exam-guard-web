@@ -6,6 +6,7 @@ type MobileExamCardProps = {
   title: string
   subtitle: string
   footerText?: string
+  onClick?: () => void
 }
 
 const badgeStyles: Record<string, string> = {
@@ -23,9 +24,12 @@ export default function MobileExamCard({
   title,
   subtitle,
   footerText,
+  onClick,
 }: MobileExamCardProps) {
   return (
-    <div className="p-5 bg-surface-container border border-outline-variant rounded-xl group transition-all active:bg-surface-container-high">
+    <button
+      onClick={onClick}
+      className="w-full text-left p-5 bg-surface-container border border-outline-variant rounded-xl group transition-all active:bg-surface-container-high hover:border-outline cursor-pointer">
       <div className="flex justify-between items-start mb-3">
         <div
           className={cn(
@@ -44,6 +48,6 @@ export default function MobileExamCard({
           <p className="text-xs text-on-surface-variant">{footerText}</p>
         </div>
       )}
-    </div>
+    </button>
   )
 }

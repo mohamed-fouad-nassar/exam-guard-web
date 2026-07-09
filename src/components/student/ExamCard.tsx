@@ -3,15 +3,23 @@ import ExamCardScheduled from "./ExamCardScheduled"
 import ExamCardCompleted from "./ExamCardCompleted"
 import ExamCardFlagged from "./ExamCardFlagged"
 
+type ExamCardCallbacks = {
+  onStart?: () => void
+  onEnterLobby?: () => void
+  onDetails?: () => void
+  onViewResults?: () => void
+  onViewReport?: () => void
+}
+
 export type ExamCardProps = {
   title: string
   course: string
   professor: string
-} & (
-  | { status: "active"; timeRemaining: string; onStart?: () => void }
-  | { status: "scheduled"; dateLabel: string; hasSystemCheck?: boolean; isLocked?: boolean; duration?: string; examId?: string; onDetails?: () => void; onEnterLobby?: () => void }
-  | { status: "completed"; dateLabel: string; score: string; integrityPercent: number; onViewResults?: () => void }
-  | { status: "flagged"; dateLabel: string; integrityScore: number; integrityWarning: string; onViewReport?: () => void }
+} & ExamCardCallbacks & (
+  | { status: "active"; timeRemaining: string }
+  | { status: "scheduled"; dateLabel: string; hasSystemCheck?: boolean; isLocked?: boolean; duration?: string; examId?: string }
+  | { status: "completed"; dateLabel: string; score: string; integrityPercent: number }
+  | { status: "flagged"; dateLabel: string; integrityScore: number; integrityWarning: string }
 )
 
 export default function ExamCard(props: ExamCardProps) {

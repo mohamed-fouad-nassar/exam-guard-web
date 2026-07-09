@@ -71,7 +71,6 @@ export default function DashboardLayout() {
         onMenuToggle={() => setDrawerOpen(true)}
         userName={mockUser.name}
         userId={mockUser.id}
-        portalLabel={portalLabel}
       />
       <MobileDrawer
         open={drawerOpen}
