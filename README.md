@@ -111,160 +111,114 @@ examguard-frontend/
 │
 ├── public/                         # Static assets (favicon, fonts)
 │
-├── designs/                        # Stitch exported design references (READ-ONLY)
-│   ├── professor-dashboard/
-│   ├── exam-builder/
-│   ├── live-monitor/
-│   ├── student-dashboard/
-│   ├── exam-taking/
-│   └── ...
-│
 ├── src/
 │   │
 │   ├── components/
-│   │   ├── ui/                     # shadcn/ui auto-generated — NEVER edit manually
-│   │   └── layout/
-│   │       ├── AppShell.tsx        # Main authenticated layout wrapper
-│   │       ├── Sidebar.tsx         # Role-aware navigation sidebar
-│   │       └── Topbar.tsx          # Top navigation bar
+│   │   ├── ui/                     # shadcn/ui auto-generated
+│   │   ├── layout/                 # AmbientBackground, Sidebar, TopNav, MobileDrawer, ExamLayoutFooter
+│   │   ├── shared/                 # BackButton, GlassCard, DataPagination, etc.
+│   │   ├── exam/                   # builder/, detail/, lobby/, session/, submit/
+│   │   └── student/                # EnrollCard, ExamCard, etc.
+│   │
+│   ├── layouts/                    # Page-level layout wrappers
+│   │   ├── AuthLayout.tsx          # Login/Register layout (centered card)
+│   │   ├── ProfessorLayout.tsx     # Sidebar + TopNav for /professor/*
+│   │   ├── StudentLayout.tsx       # Sidebar + TopNav for /student/*
+│   │   ├── AdminLayout.tsx         # Sidebar + TopNav for /admin/*
+│   │   └── ExamLayout.tsx          # Fullscreen chrome for /exam/:examId/*
+│   │
+│   ├── router/
+│   │   ├── index.tsx               # Root router config (lazy-loaded routes)
+│   │   ├── paths.ts                # PATHS constants (role-prefixed)
+│   │   └── guards/                 # GuestGuard, ProfessorGuard, StudentGuard, AdminGuard, ExamFlowGuard
+│   │
+│   ├── store/
+│   │   └── examSessionStore.ts     # Zustand store for exam flow sequence (lobby → check → take → submitted)
+│   │
+│   ├── pages/
+│   │   ├── landing/Landing.tsx
+│   │   ├── auth/Login.tsx
+│   │   ├── auth/Register.tsx
+│   │   ├── dashboard/Dashboard.tsx, Exams.tsx, Results.tsx, ExamCreate.tsx, create/*
+│   │   └── exam/ExamDetail.tsx, ExamLobby.tsx, ExamSession.tsx, ExamSubmit.tsx
 │   │
 │   ├── features/                   # Feature-based modules
-│   │   ├── auth/
-│   │   │   ├── components/
-│   │   │   ├── hooks/
-│   │   │   └── types/
-│   │   ├── dashboard/
-│   │   ├── exams/
-│   │   ├── proctoring/
-│   │   ├── results/
-│   │   ├── question-bank/
-│   │   └── admin/
+│   │   ├── auth/login/
+│   │   ├── auth/register/
+│   │   └── exams/
 │   │
-│   ├── hooks/                      # Shared custom hooks
-│   │   ├── useAuth.ts
-│   │   ├── useExamSession.ts
-│   │   └── useProctoring.ts
-│   │
-│   ├── lib/                        # Core configuration
-│   │   ├── axios.ts                # Axios instance + interceptors
-│   │   ├── queryClient.ts          # TanStack Query client config
-│   │   └── utils.ts                # cn() and shared utilities
-│   │
-│   ├── pages/                      # Route-level page components
-│   │   ├── public/
-│   │   │   ├── LandingPage.tsx
-│   │   │   ├── LoginPage.tsx
-│   │   │   └── RegisterPage.tsx
-│   │   ├── professor/
-│   │   ├── student/
-│   │   ├── admin/
-│   │   └── utility/
-│   │
-│   ├── routes/
-│   │   ├── index.tsx               # Root router config
-│   │   ├── ProfessorRoutes.tsx     # Protected professor routes
-│   │   ├── StudentRoutes.tsx       # Protected student routes
-│   │   └── AdminRoutes.tsx         # Protected admin routes
-│   │
-│   ├── store/                      # Zustand global stores
-│   │   ├── authStore.ts            # Auth state (user, token, role)
-│   │   └── examSessionStore.ts     # Active exam state (answers, timer, flags)
-│   │
-│   ├── types/                      # Global TypeScript types
-│   │   ├── api.types.ts            # API response wrappers
-│   │   ├── auth.types.ts
-│   │   └── index.ts
-│   │
-│   ├── App.tsx
-│   ├── main.tsx
-│   └── index.css                   # Tailwind directives + CSS variables
+│   ├── types/                      # common.types.ts, auth.types.ts, exam.types.ts
+│   ├── lib/                        # mock-user.ts, queryClient.ts, utils.ts
+│   └── hooks/                      # useTheme.tsx
 │
-├── .env.example
-├── .env.local                      # Your local env (git-ignored)
-├── .eslintrc.json
-├── .prettierrc
-├── components.json                 # shadcn/ui config
-├── tailwind.config.ts
-├── tsconfig.json
-├── tsconfig.node.json
-└── vite.config.ts
+├── App.tsx
+├── main.tsx
+└── index.css
 ```
 
 ---
 
-## 🗺️ Pages & Routes
+## 🗺️ Routes
 
-### 🔓 Public — No Auth Required
+### 🔓 Public
 
-| Page | File | Route |
+| Route | Component | File |
 |---|---|---|
-| Landing / Marketing | `pages/public/LandingPage.tsx` | `/` |
-| Login | `pages/public/LoginPage.tsx` | `/login` |
-| Register | `pages/public/RegisterPage.tsx` | `/register` |
-| Forgot Password | `pages/public/ForgotPasswordPage.tsx` | `/forgot-password` |
-| Reset Password | `pages/public/ResetPasswordPage.tsx` | `/reset-password/:token` |
-| Email Verification | `pages/public/VerifyEmailPage.tsx` | `/verify-email/:token` |
+| `/` | Landing | `pages/landing/Landing.tsx` |
+| `/login` | Login | `pages/auth/Login.tsx` |
+| `/register` | Register | `pages/auth/Register.tsx` |
 
 ---
 
-### 👨‍🏫 Professor — Role: `professor`
+### 👨‍🏫 Professor — `/professor/*`
 
-| Page | File | Route |
+| Route | Component | Status |
 |---|---|---|
-| Dashboard | `pages/professor/DashboardPage.tsx` | `/professor/dashboard` |
-| Exam List | `pages/professor/ExamsPage.tsx` | `/professor/exams` |
-| Create Exam — Upload | `pages/professor/CreateExamUploadPage.tsx` | `/professor/exams/create/upload` |
-| Create Exam — Generate | `pages/professor/CreateExamGeneratePage.tsx` | `/professor/exams/create/generate` |
-| Create Exam — Review | `pages/professor/CreateExamReviewPage.tsx` | `/professor/exams/create/review` |
-| Exam Detail / Edit | `pages/professor/ExamDetailPage.tsx` | `/professor/exams/:examId` |
-| Question Bank | `pages/professor/QuestionBankPage.tsx` | `/professor/question-bank` |
-| Live Proctoring Monitor | `pages/professor/LiveMonitorPage.tsx` | `/professor/exams/:examId/monitor` |
-| Exam Results & Analytics | `pages/professor/ExamResultsPage.tsx` | `/professor/exams/:examId/results` |
-| Flag / Incident Review | `pages/professor/FlagReviewPage.tsx` | `/professor/exams/:examId/flags/:studentId` |
-| Student Management | `pages/professor/StudentsPage.tsx` | `/professor/students` |
-| Course Management | `pages/professor/CoursesPage.tsx` | `/professor/courses` |
-| Settings | `pages/professor/SettingsPage.tsx` | `/professor/settings` |
+| `/professor/dashboard` | — | Coming Soon |
+| `/professor/exams` | — | Coming Soon |
+| `/professor/exams/create` | ExamBuilder (tabs: Basic Info, Questions, Settings, Preview) | ✅ |
+| `/professor/exams/:examId` | — | Coming Soon |
+| `/professor/exams/:examId/monitor` | — | Coming Soon |
+| `/professor/exams/:examId/results` | — | Coming Soon |
+| `/professor/question-bank` | — | Coming Soon |
+| `/professor/students` | — | Coming Soon |
+| `/professor/courses` | — | Coming Soon |
+| `/professor/settings` | — | Coming Soon |
 
 ---
 
-### 👨‍🎓 Student — Role: `student`
+### 👨‍🎓 Student — `/student/*`
 
-| Page | File | Route |
+| Route | Component | File |
 |---|---|---|
-| Dashboard | `pages/student/DashboardPage.tsx` | `/student/dashboard` |
-| Upcoming Exams | `pages/student/ExamsPage.tsx` | `/student/exams` |
-| Exam Lobby | `pages/student/ExamLobbyPage.tsx` | `/student/exams/:examId/lobby` |
-| System Check | `pages/student/SystemCheckPage.tsx` | `/student/exams/:examId/system-check` |
-| Exam Taking *(fullscreen)* | `pages/student/ExamTakingPage.tsx` | `/student/exams/:examId/take` |
-| Exam Submitted | `pages/student/ExamSubmittedPage.tsx` | `/student/exams/:examId/submitted` |
-| My Results | `pages/student/ResultsPage.tsx` | `/student/results` |
-| Result Detail | `pages/student/ResultDetailPage.tsx` | `/student/results/:examId` |
-| Integrity Reports | `pages/student/FlagsPage.tsx` | `/student/flags` |
-| Submit Rebuttal | `pages/student/RebuttalPage.tsx` | `/student/flags/:flagId/rebuttal` |
-| Profile & Settings | `pages/student/SettingsPage.tsx` | `/student/settings` |
+| `/student/dashboard` | Dashboard | `pages/dashboard/Dashboard.tsx` |
+| `/student/exams` | Exams | `pages/dashboard/Exams.tsx` |
+| `/student/results` | Results | `pages/dashboard/Results.tsx` |
+
+**Exam Flow (fullscreen, sequential):** `/exam/:examId/lobby` → `/exam/:examId/system-check` → `/exam/:examId/take` → `/exam/:examId/submitted`
+
+| Route | Component | File |
+|---|---|---|
+| `/exam/:examId/lobby` | ExamLobby | `pages/exam/ExamLobby.tsx` |
+| `/exam/:examId/system-check` | — | Coming Soon |
+| `/exam/:examId/take` | ExamSession | `pages/exam/ExamSession.tsx` |
+| `/exam/:examId/submitted` | ExamSubmit | `pages/exam/ExamSubmit.tsx` |
 
 ---
 
-### 🛡️ Admin — Role: `admin`
+### 🛡️ Admin — `/admin/*`
 
-| Page | File | Route |
-|---|---|---|
-| Admin Dashboard | `pages/admin/DashboardPage.tsx` | `/admin/dashboard` |
-| User Management | `pages/admin/UsersPage.tsx` | `/admin/users` |
-| All Exams Overview | `pages/admin/ExamsPage.tsx` | `/admin/exams` |
-| Escalated Violations | `pages/admin/ViolationsPage.tsx` | `/admin/violations` |
-| System Health / Logs | `pages/admin/SystemPage.tsx` | `/admin/system` |
-| Bias Audit Reports | `pages/admin/BiasAuditPage.tsx` | `/admin/bias-audit` |
+All admin routes are Coming Soon.
 
 ---
 
 ### ⚠️ Utility
 
-| Page | File | Route |
+| Route | Component | File |
 |---|---|---|
-| 404 Not Found | `pages/utility/NotFoundPage.tsx` | `*` |
-| 403 Unauthorized | `pages/utility/UnauthorizedPage.tsx` | `/403` |
-| Maintenance | `pages/utility/MaintenancePage.tsx` | `/maintenance` |
+| `/403` | — | Coming Soon |
+| `/404` | NotFound | `pages/NotFound.tsx` |
+| `*` | → redirect to `/404` | — |
 
 ---
 
@@ -413,20 +367,16 @@ pnpm dlx shadcn@latest add dialog
 
 ---
 
-## 🔐 Auth & Route Guards
+## 🔐 Route Architecture
 
-Routes are protected by role-based guards in `src/routes/`:
+The routing uses a **hybrid role-prefix** approach:
 
-```
-/professor/* → requires auth + role === "professor"
-/student/*   → requires auth + role === "student"
-/admin/*     → requires auth + role === "admin"
-```
+- `/professor/*` — ProfessorGuard (all professor pages behind one guard)
+- `/student/*` — StudentGuard (all student pages behind one guard)
+- `/admin/*` — AdminGuard (all admin pages behind one guard)
+- `/exam/:examId/*` — ExamFlowGuard (sequential step enforcement: lobby → system-check → take → submitted)
 
-Unauthenticated users are redirected to `/login`.  
-Wrong-role users are redirected to `/403`.
-
-Token storage and refresh logic lives in `src/lib/axios.ts` via request interceptors.
+Route guards are implemented in `src/router/guards/` and currently pass through all requests (auth bypassed during development).
 
 ---
 

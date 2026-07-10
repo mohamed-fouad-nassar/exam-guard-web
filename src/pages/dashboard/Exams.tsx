@@ -189,9 +189,9 @@ export default function Exams() {
               title="Search Exams"
               items={searchItems}
               onSearch={handleSearch}
-              onSelect={(item) => navigate(PATHS.EXAM_DETAIL(item.id))}
+              onSelect={(item) => navigate(PATHS.PROFESSOR.EXAM_DETAIL(item.id))}
               onSubmit={(q) =>
-                navigate(`${PATHS.EXAM_SEARCH}?q=${encodeURIComponent(q)}`)
+                navigate(`${PATHS.PROFESSOR.EXAMS}?q=${encodeURIComponent(q)}`)
               }
               placeholder="Search exams..."
               notFoundText="No exams match your search."
@@ -211,17 +211,17 @@ export default function Exams() {
                 <ExamCard
                   key={id}
                   {...cardProps}
-                  onDetails={() => navigate(PATHS.EXAM_DETAIL(id))}
-                  onStart={() => navigate(PATHS.EXAM_SESSION(id))}
-                  onEnterLobby={() => navigate(PATHS.EXAM_TAKE(id))}
-                  onViewResults={() => navigate(PATHS.RESULT_DETAIL(id))}
-                  onViewReport={() => navigate(PATHS.RESULT_DETAIL(id))}
+                  onDetails={() => navigate(PATHS.PROFESSOR.EXAM_DETAIL(id))}
+                  onStart={() => navigate(PATHS.EXAM.TAKE(id))}
+                  onEnterLobby={() => navigate(PATHS.EXAM.LOBBY(id))}
+                  onViewResults={() => navigate(PATHS.STUDENT.RESULT_DETAIL(id))}
+                  onViewReport={() => navigate(PATHS.STUDENT.RESULT_DETAIL(id))}
                 />
               );
             })}
           </div>
         ) : (
-          <ExamsEmptyState onEnroll={() => navigate(PATHS.EXAMS)} />
+          <ExamsEmptyState onEnroll={() => navigate(PATHS.STUDENT.EXAMS)} />
         )}
       </div>
 
@@ -233,7 +233,7 @@ export default function Exams() {
           title="Advanced Systems Design: Midterm II"
           endsAt="11:45 AM"
           timeLeft="45m Left"
-          onStart={() => navigate(PATHS.EXAM_SESSION("active-1"))}
+          onStart={() => navigate(PATHS.EXAM.TAKE("active-1"))}
         />
 
         {hasEnrolledExams ? (
@@ -246,12 +246,12 @@ export default function Exams() {
                 title={card.title}
                 subtitle={card.subtitle}
                 footerText={card.footerText}
-                onClick={() => navigate(PATHS.EXAM_DETAIL(card.id))}
+                onClick={() => navigate(PATHS.PROFESSOR.EXAM_DETAIL(card.id))}
               />
             ))}
           </div>
         ) : (
-          <ExamsEmptyState onEnroll={() => navigate(PATHS.EXAMS)} />
+          <ExamsEmptyState onEnroll={() => navigate(PATHS.STUDENT.EXAMS)} />
         )}
       </div>
     </div>

@@ -1,21 +1,62 @@
 export const PATHS = {
-  LANDING: "/",
 
-  LOGIN: "/login",
-  REGISTER: "/register",
+  // ── Public ──────────────────────────────────────────
+  LANDING:    "/",
+  LOGIN:      "/login",
+  REGISTER:   "/register",
 
-  DASHBOARD: "/dashboard",
-  EXAMS: "/dashboard/exams",
-  EXAM_SEARCH: "/dashboard/exams/search",
-  EXAM_CREATE: "/dashboard/exams/create",
-  EXAM_DETAIL: (examId: string) => `/dashboard/exams/${examId}`,
-  EXAM_TAKE: (examId: string) => `/exams/${examId}/take`,
-  EXAM_SESSION: (examId: string) => `/exams/${examId}/session`,
-  EXAM_SUBMIT: (examId: string) => `/exams/${examId}/submit`,
+  // ── Professor ────────────────────────────────────────
+  PROFESSOR: {
+    DASHBOARD:        "/professor/dashboard",
+    EXAMS:            "/professor/exams",
+    EXAM_BUILDER:     "/professor/exams/create",
+    EXAM_CREATE:      {
+      UPLOAD:         "/professor/exams/create/upload",
+      GENERATE:       "/professor/exams/create/generate",
+      REVIEW:         "/professor/exams/create/review",
+    },
+    EXAM_DETAIL:      (examId: string) => `/professor/exams/${examId}`,
+    EXAM_MONITOR:     (examId: string) => `/professor/exams/${examId}/monitor`,
+    EXAM_RESULTS:     (examId: string) => `/professor/exams/${examId}/results`,
+    FLAG_REVIEW:      (examId: string, studentId: string) =>
+                        `/professor/exams/${examId}/flags/${studentId}`,
+    QUESTION_BANK:    "/professor/question-bank",
+    STUDENTS:         "/professor/students",
+    COURSES:          "/professor/courses",
+    SETTINGS:         "/professor/settings",
+  },
 
-  RESULTS: "/dashboard/results",
-  RESULT_DETAIL: (resultId: string) => `/dashboard/results/${resultId}`,
+  // ── Student ──────────────────────────────────────────
+  STUDENT: {
+    DASHBOARD:        "/student/dashboard",
+    EXAMS:            "/student/exams",
+    RESULTS:          "/student/results",
+    RESULT_DETAIL:    (examId: string) => `/student/results/${examId}`,
+    FLAGS:            "/student/flags",
+    REBUTTAL:         (flagId: string) => `/student/flags/${flagId}/rebuttal`,
+    SETTINGS:         "/student/settings",
+  },
 
-  SETTINGS: "/dashboard/settings",
-  USERS: "/dashboard/users",
-} as const;
+  // ── Admin ────────────────────────────────────────────
+  ADMIN: {
+    DASHBOARD:        "/admin/dashboard",
+    USERS:            "/admin/users",
+    EXAMS:            "/admin/exams",
+    VIOLATIONS:       "/admin/violations",
+    SYSTEM:           "/admin/system",
+    BIAS_AUDIT:       "/admin/bias-audit",
+  },
+
+  // ── Exam Flow (isolated, fullscreen) ─────────────────
+  EXAM: {
+    LOBBY:            (examId: string) => `/exam/${examId}/lobby`,
+    SYSTEM_CHECK:     (examId: string) => `/exam/${examId}/system-check`,
+    TAKE:             (examId: string) => `/exam/${examId}/take`,
+    SUBMITTED:        (examId: string) => `/exam/${examId}/submitted`,
+  },
+
+  // ── Utility ──────────────────────────────────────────
+  UNAUTHORIZED:   "/403",
+  NOT_FOUND:      "/404",
+
+} as const
