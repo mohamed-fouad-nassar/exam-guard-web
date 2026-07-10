@@ -2,7 +2,6 @@ import { Link, useLocation } from "react-router";
 import { cn } from "@/lib/utils";
 import { Shield } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { PATHS } from "@/router/paths";
 
 export type NavItem = {
   label: string;
@@ -14,14 +13,15 @@ export type NavItem = {
 type SidebarProps = {
   navItems: NavItem[];
   portalLabel: string;
+  homePath?: string;
 };
 
-export default function Sidebar({ navItems, portalLabel }: SidebarProps) {
+export default function Sidebar({ navItems, portalLabel, homePath = "/" }: SidebarProps) {
   const { pathname } = useLocation();
 
   return (
     <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-60 flex-col border-r border-border bg-surface-container-lowest px-4 py-6 z-50">
-      <Link to={PATHS.DASHBOARD} className="mb-10 flex items-center gap-3">
+      <Link to={homePath} className="mb-10 flex items-center gap-3">
         <div className="flex size-10 items-center justify-center rounded bg-primary-container text-on-primary-container">
           <Shield className="fill-current" size={20} />
         </div>

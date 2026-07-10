@@ -18,4 +18,4 @@ export interface ApiError {
   errors?: Record<string, string[]>;
 }
 
-export type Role = "admin" | "teacher" | "student";
+export type Role = "admin" | "professor" | "student";

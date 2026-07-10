@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router";
+import { PATHS } from "@/router/paths";
+import { useExamSessionStore } from "@/store/examSessionStore";
 
 import BackButton from "@/components/shared/BackButton";
 import CountdownTimer from "@/components/exam/lobby/CountdownTimer";
@@ -15,8 +17,9 @@ export default function ExamLobby() {
   const [checked, setChecked] = useState(false);
 
   function handleStart() {
-    if (!checked) return;
-    navigate(`/exams/${examId}/session`);
+    if (!checked || !examId) return;
+    useExamSessionStore.getState().completeLobby(examId);
+    navigate(PATHS.EXAM.SYSTEM_CHECK(examId));
   }
 
   return (

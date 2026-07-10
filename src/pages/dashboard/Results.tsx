@@ -194,7 +194,7 @@ export default function Results() {
               title="Search Results"
               items={searchItems}
               onSearch={handleSearch}
-              onSelect={(item) => navigate(PATHS.RESULT_DETAIL(item.id))}
+              onSelect={(item) => navigate(PATHS.STUDENT.RESULT_DETAIL(item.id))}
               placeholder="Search results..."
               notFoundText="No results match your search."
             />
@@ -258,7 +258,7 @@ export default function Results() {
                       </DataTableCell>
                       <DataTableCell className="text-right">
                         <Button
-                          onClick={() => navigate(PATHS.RESULT_DETAIL(row.id))}
+                          onClick={() => navigate(PATHS.STUDENT.RESULT_DETAIL(row.id))}
                         >
                           View Details
                         </Button>
