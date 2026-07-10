@@ -3,7 +3,6 @@ import BasicInfoForm from "@/components/exam/builder/BasicInfoForm";
 import ExamSummaryCard from "@/components/exam/builder/ExamSummaryCard";
 import QuickActionsCard from "@/components/exam/builder/QuickActionsCard";
 import type { QuickAction } from "@/components/exam/builder/QuickActionsCard";
-import SecureChannelBanner from "@/components/exam/builder/SecureChannelBanner";
 
 const summaryStats = [
   { label: "Questions", value: "12" },
@@ -30,7 +29,7 @@ export default function ExamBasicInfo() {
           lastSaved="2 mins ago"
         />
         <QuickActionsCard actions={quickActions} />
-        <SecureChannelBanner />
+
       </aside>
     </div>
   );
