@@ -19,12 +19,12 @@ export default function ExamSummaryCard({
   lastSaved,
 }: ExamSummaryCardProps) {
   return (
-    <div className="bg-surface-container border border-outline-variant rounded-xl overflow-hidden shadow-xl shadow-black/20">
+    <div className="bg-surface-container border border-outline-variant rounded-xl overflow-hidden">
       <div className="p-6 border-b border-outline-variant bg-surface-container-high flex justify-between items-center">
         <h4 className="font-heading text-lg font-semibold text-on-surface">
           Exam Summary
         </h4>
-        <span className="px-2 py-0.5 text-[11px] font-bold rounded-full bg-amber-900/30 text-amber-400 border border-amber-800 uppercase tracking-wider">
+        <span className="px-2 py-0.5 text-[11px] font-bold rounded-full bg-amber-100 text-amber-700 border border-amber-300 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800 uppercase tracking-wider">
           {status}
         </span>
       </div>

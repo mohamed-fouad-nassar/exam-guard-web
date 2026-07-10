@@ -1,4 +1,4 @@
-import { Sparkles, Shield, ChevronRight } from "lucide-react";
+import { Sparkles, ChevronRight } from "lucide-react";
 
 export type QuickAction = {
   label: string;
