@@ -1,6 +1,13 @@
 import { useLocation, useNavigate } from "react-router";
 import { Outlet } from "react-router";
-import { Save, Eye, FileText, ListChecks, SlidersHorizontal, Monitor } from "lucide-react";
+import {
+  Save,
+  Eye,
+  FileText,
+  ListChecks,
+  SlidersHorizontal,
+  Monitor,
+} from "lucide-react";
 import ExamBuilderHeader from "@/components/exam/builder/ExamBuilderHeader";
 import type { BuilderAction } from "@/components/exam/builder/ExamBuilderHeader";
 import ExamBuilderTabs from "@/components/exam/builder/ExamBuilderTabs";
@@ -50,19 +57,21 @@ export default function ExamCreate() {
   }
 
   return (
-    <div className="space-y-8">
-      <ExamBuilderHeader
-        title="Create New Exam"
-        subtitle="Configure exam parameters and integrity settings."
-        primaryAction={primaryAction}
-        secondaryAction={secondaryAction}
-      />
+    <div className="min-h-full flex flex-col">
+      <div className="sticky top-16 z-10 -mx-6 px-6 pb-px space-y-4 backdrop-blur-xl">
+        <ExamBuilderHeader
+          title="Create New Exam"
+          subtitle="Configure exam parameters and integrity settings."
+          primaryAction={primaryAction}
+          secondaryAction={secondaryAction}
+        />
 
-      <ExamBuilderTabs
-        tabs={builderTabs}
-        activeTab={activeTab}
-        onTabChange={handleTabChange}
-      />
+        <ExamBuilderTabs
+          tabs={builderTabs}
+          activeTab={activeTab}
+          onTabChange={handleTabChange}
+        />
+      </div>
 
       <Outlet />
     </div>

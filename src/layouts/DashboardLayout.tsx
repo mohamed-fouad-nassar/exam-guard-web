@@ -27,7 +27,12 @@ const navItemsByRole: Record<Role, NavItem[]> = {
   teacher: [
     { label: "Dashboard", icon: LayoutDashboard, path: PATHS.DASHBOARD },
     { label: "My Exams", icon: ClipboardList, path: PATHS.EXAMS },
-    { label: "Create Exam", icon: FilePlus, path: PATHS.EXAM_CREATE, matchSubPaths: true },
+    {
+      label: "Create Exam",
+      icon: FilePlus,
+      path: PATHS.EXAM_CREATE,
+      matchSubPaths: true,
+    },
     { label: "Results", icon: BarChart3, path: PATHS.RESULTS },
     { label: "Settings", icon: Settings, path: PATHS.SETTINGS },
   ],
@@ -79,7 +84,7 @@ export default function DashboardLayout() {
         onClose={() => setDrawerOpen(false)}
         navItems={navItems}
       />
-      <main className="lg:ml-60 pt-24 pb-12 px-6">
+      <main className="lg:ml-60 pt-20 pb-8 px-6">
         <Outlet />
       </main>
     </div>
