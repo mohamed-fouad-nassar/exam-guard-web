@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from "react-router";
+import { PATHS } from "@/router/paths";
 import { Camera, Monitor, Keyboard, Mic, Wifi } from "lucide-react";
 import type { IntegrityItem, SystemCheckItem, FaqItem } from "@/types/exam.types";
 
@@ -73,7 +74,7 @@ export default function ExamDetail() {
           questionsCount={mockData.questionsCount}
           timeLimitMinutes={mockData.timeLimitMinutes}
           passingScore={mockData.passingScore}
-          onStart={() => navigate(`/exams/${examId}/session`)}
+          onStart={() => navigate(PATHS.EXAM.LOBBY(examId!))}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

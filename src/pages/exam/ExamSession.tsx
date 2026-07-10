@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
+import { PATHS } from "@/router/paths";
+import { useExamSessionStore } from "@/store/examSessionStore";
 import { ClipboardList } from "lucide-react";
 
-import AmbientBackground from "@/components/layout/AmbientBackground";
 import ExamSessionHeader from "@/components/exam/session/ExamSessionHeader";
 import QuestionHeader from "@/components/exam/session/QuestionHeader";
 import QuestionOptionsList from "@/components/exam/session/QuestionOptionsList";
@@ -111,99 +112,97 @@ export default function ExamSession() {
   }
 
   function handleSubmit() {
-    navigate(`/exams/${examId}/submit`);
+    if (!examId) return;
+    useExamSessionStore.getState().submitExam(examId);
+    navigate(PATHS.EXAM.SUBMITTED(examId));
   }
 
   return (
-    <div className="min-h-screen bg-background text-on-surface flex flex-col">
-      <AmbientBackground />
-
-      <main className="flex flex-1">
-        <section className="flex flex-col relative z-10 min-w-0 flex-1">
-          <ExamSessionHeader
-            title="Midterm — CS301"
-            subtitle="Data Structures & Algorithms"
-            timer={timer}
-            onSubmit={handleSubmit}
-          />
-
-          <div className="px-6 md:px-12 py-6 md:py-8 flex justify-center">
-          <div className="w-full flex flex-col gap-6 md:gap-8">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1 min-w-0">
-                <QuestionHeader
-                  number={mockQuestion.number}
-                  total={mockQuestion.total}
-                  points={mockQuestion.points}
-                  difficulty={mockQuestion.difficulty}
-                />
-              </div>
-              <button
-                onClick={() => setDrawerOpen(true)}
-                className="lg:hidden flex items-center gap-2 shrink-0 bg-surface-container-high border border-outline-variant px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface transition-colors"
-              >
-                <ClipboardList size={16} />
-                <span className="font-mono text-[11px]">NAV</span>
-              </button>
-            </div>
-
-            <div className="space-y-4 md:space-y-6">
-              <h2 className="font-heading text-xl md:text-h2 text-on-surface">
-                {mockQuestion.title}
-              </h2>
-              <p className="text-body-sm md:text-body-lg text-on-surface-variant leading-relaxed">
-                {mockQuestion.context}
-              </p>
-            </div>
-
-            <QuestionOptionsList
-              name={`q${mockQuestion.number}`}
-              options={mockQuestion.options}
-              selected={selected}
-              onSelect={setSelected}
-            />
-
-            <QuestionNavigation
-              onPrevious={handlePrevious}
-              onNext={handleNext}
-              onMarkReview={handleMarkReview}
-              isMarked={isMarked}
-            />
-            </div>
-          </div>
-        </section>
-
-        <SessionSidebar
-          stats={mockStats}
-          legendItems={mockLegendItems}
-          questions={mockGridQuestions}
-          lastSynced="14:02:41"
-          onQuestionSelect={handleQuestionSelect}
+    <div className="flex flex-1 min-h-0">
+      <section className="flex flex-col relative z-10 min-w-0 flex-1">
+        <ExamSessionHeader
+          title="Midterm — CS301"
+          subtitle="Data Structures & Algorithms"
+          timer={timer}
           onSubmit={handleSubmit}
-          className="hidden lg:flex"
         />
 
-        {drawerOpen && (
-          <div className="fixed inset-0 z-50 lg:hidden">
-            <div
-              className="absolute inset-0 bg-black/60"
-              onClick={() => setDrawerOpen(false)}
-            />
-            <div className="absolute right-0 top-0 bottom-0 w-[85vw] max-w-sm">
-              <SessionSidebar
-                stats={mockStats}
-                legendItems={mockLegendItems}
-                questions={mockGridQuestions}
-                lastSynced="14:02:41"
-                onQuestionSelect={handleQuestionSelect}
-                onSubmit={handleSubmit}
-                onClose={() => setDrawerOpen(false)}
-                mobile
+        <div className="px-6 md:px-12 py-6 md:py-8 flex justify-center">
+        <div className="w-full flex flex-col gap-6 md:gap-8">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex-1 min-w-0">
+              <QuestionHeader
+                number={mockQuestion.number}
+                total={mockQuestion.total}
+                points={mockQuestion.points}
+                difficulty={mockQuestion.difficulty}
               />
             </div>
+            <button
+              onClick={() => setDrawerOpen(true)}
+              className="lg:hidden flex items-center gap-2 shrink-0 bg-surface-container-high border border-outline-variant px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface transition-colors"
+            >
+              <ClipboardList size={16} />
+              <span className="font-mono text-[11px]">NAV</span>
+            </button>
           </div>
-        )}
-      </main>
+
+          <div className="space-y-4 md:space-y-6">
+            <h2 className="font-heading text-xl md:text-h2 text-on-surface">
+              {mockQuestion.title}
+            </h2>
+            <p className="text-body-sm md:text-body-lg text-on-surface-variant leading-relaxed">
+              {mockQuestion.context}
+            </p>
+          </div>
+
+          <QuestionOptionsList
+            name={`q${mockQuestion.number}`}
+            options={mockQuestion.options}
+            selected={selected}
+            onSelect={setSelected}
+          />
+
+          <QuestionNavigation
+            onPrevious={handlePrevious}
+            onNext={handleNext}
+            onMarkReview={handleMarkReview}
+            isMarked={isMarked}
+          />
+          </div>
+        </div>
+      </section>
+
+      <SessionSidebar
+        stats={mockStats}
+        legendItems={mockLegendItems}
+        questions={mockGridQuestions}
+        lastSynced="14:02:41"
+        onQuestionSelect={handleQuestionSelect}
+        onSubmit={handleSubmit}
+        className="hidden lg:flex"
+      />
+
+      {drawerOpen && (
+        <div className="fixed inset-0 z-50 lg:hidden">
+          <div
+            className="absolute inset-0 bg-black/60"
+            onClick={() => setDrawerOpen(false)}
+          />
+          <div className="absolute right-0 top-0 bottom-0 w-[85vw] max-w-sm">
+            <SessionSidebar
+              stats={mockStats}
+              legendItems={mockLegendItems}
+              questions={mockGridQuestions}
+              lastSynced="14:02:41"
+              onQuestionSelect={handleQuestionSelect}
+              onSubmit={handleSubmit}
+              onClose={() => setDrawerOpen(false)}
+              mobile
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
