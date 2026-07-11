@@ -21,7 +21,6 @@ export type MobileExamData = {
 
 type ProfessorExamCardProps = {
   exam: MobileExamData
-  onClick?: () => void
   onMenuClick?: () => void
 }
 
@@ -44,7 +43,6 @@ const typeBadge: Record<string, { label: string; variant: "secondary" | "outline
 
 export default function ProfessorExamCard({
   exam,
-  onClick,
   onMenuClick,
 }: ProfessorExamCardProps) {
   const { title, courseCode, section, status, typeLabel, questions, duration, date, time, completed, accentColor } = exam
@@ -53,10 +51,9 @@ export default function ProfessorExamCard({
   const isCompleted = completed
 
   return (
-    <button
-      onClick={onClick}
+    <div
       className={cn(
-        "w-full text-left bg-surface-container-low border border-outline-variant rounded-xl p-4 flex flex-col gap-3 relative overflow-hidden transition-all active:bg-surface-container-high",
+        "w-full text-left bg-surface-container-low border border-outline-variant rounded-xl p-4 flex flex-col gap-3 relative overflow-hidden",
         isCompleted && "bg-surface-container-low/50 border-outline-variant/50 grayscale-[0.5]",
       )}
     >
@@ -132,6 +129,6 @@ export default function ProfessorExamCard({
           </div>
         )}
       </div>
-    </button>
+    </div>
   )
 }

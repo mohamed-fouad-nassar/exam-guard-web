@@ -222,7 +222,6 @@ export default function ProfessorExams() {
               <ProfessorExamCard
                 key={card.id}
                 exam={card}
-                onClick={() => navigate(PATHS.PROFESSOR.EXAM_DETAIL(card.id))}
               />
             ))}
           </div>
