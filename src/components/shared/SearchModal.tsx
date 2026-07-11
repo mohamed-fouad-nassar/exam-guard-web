@@ -19,6 +19,7 @@ type SearchModalProps = {
   onSubmit?: (query: string) => void
   placeholder?: string
   notFoundText?: string
+  className?: string
 }
 
 export default function SearchModal({
@@ -29,6 +30,7 @@ export default function SearchModal({
   onSubmit,
   placeholder = "Search...",
   notFoundText = "No results found.",
+  className,
 }: SearchModalProps) {
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState("")
@@ -50,7 +52,7 @@ export default function SearchModal({
     <Dialog open={open} onOpenChange={setOpen}>
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center gap-2 px-3 py-2 bg-surface-container-low border border-outline-variant rounded-lg text-sm font-medium hover:bg-surface-container-high transition-colors"
+        className={cn("flex items-center gap-2 px-3 py-2 bg-surface-container-low border border-outline-variant rounded-lg text-sm font-medium hover:bg-surface-container-high transition-colors", className)}
       >
         <Search size={18} />
         Search

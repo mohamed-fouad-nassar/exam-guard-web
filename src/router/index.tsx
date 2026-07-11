@@ -21,6 +21,9 @@ const RegisterPage = lazy(() => import("@/pages/auth/Register"));
 const DashboardPage = lazy(() => import("@/pages/dashboard/Dashboard"));
 const ExamsPage = lazy(() => import("@/pages/dashboard/Exams"));
 const ResultsPage = lazy(() => import("@/pages/dashboard/Results"));
+const ProfessorExamsPage = lazy(
+  () => import("@/pages/dashboard/ProfessorExams"),
+);
 
 const ExamCreatePage = lazy(() => import("@/pages/dashboard/ExamCreate"));
 const ExamBasicInfoPage = lazy(() => import("@/pages/dashboard/create/ExamBasicInfo"));
@@ -36,7 +39,11 @@ const ExamSubmitPage = lazy(() => import("@/pages/exam/ExamSubmit"));
 const NotFoundPage = lazy(() => import("@/pages/NotFound"));
 
 const Placeholder = lazy(() =>
-  Promise.resolve({ default: () => <div className="p-8 text-white/60">Coming Soon</div> })
+  Promise.resolve({
+    default: () => (
+      <div className="p-8 text-black/60 dark:text-black/60">Coming Soon</div>
+    ),
+  }),
 );
 
 function Loading() {
@@ -67,7 +74,7 @@ const AppRouter = () => {
         <Route element={<ProfessorGuard />}>
           <Route element={<ProfessorLayout />}>
             <Route path={PATHS.PROFESSOR.DASHBOARD} element={<SuspenseBoundary><Placeholder /></SuspenseBoundary>} />
-            <Route path={PATHS.PROFESSOR.EXAMS} element={<SuspenseBoundary><Placeholder /></SuspenseBoundary>} />
+            <Route path={PATHS.PROFESSOR.EXAMS} element={<SuspenseBoundary><ProfessorExamsPage /></SuspenseBoundary>} />
             <Route path={PATHS.PROFESSOR.EXAM_BUILDER} element={<SuspenseBoundary><ExamCreatePage /></SuspenseBoundary>}>
               <Route index element={<SuspenseBoundary><ExamBasicInfoPage /></SuspenseBoundary>} />
               <Route path="questions" element={<SuspenseBoundary><ExamQuestionsPage /></SuspenseBoundary>} />
